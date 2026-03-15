@@ -1,0 +1,74 @@
+$PBExportHeader$d_ddlb_categories.srd
+$PBExportComments$DropDown DataWindow — Product Categories lookup
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=category_id dbname="category_id")
+column=(type=char(80) name=category_name dbname="category_name")
+retrieve="SELECT category_id, category_name FROM product_categories ORDER BY category_name"
+update="product_categories"
+updateable=no
+)
+
+data()
+
+header(height=0)
+detail(height=200)
+summary(height=0)
+footer(height=0)
+
+column(band=detail id=1 x=0 y=0 width=1 height=1 name=category_id visible=no)
+column(band=detail id=2 x=0 y=0 width=1400 height=200 name=category_name font.face="Segoe UI" font.height=-10)
+
+
+$PBExportHeader$d_ddlb_customers.srd
+$PBExportComments$DropDown DataWindow — Customers lookup for order entry
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=customer_id dbname="customer_id")
+column=(type=char(100) name=company_name dbname="company_name")
+retrieve="SELECT customer_id, company_name FROM customers WHERE is_active = 1 ORDER BY company_name"
+update="customers"
+updateable=no
+)
+
+data()
+
+header(height=0)
+detail(height=200)
+summary(height=0)
+footer(height=0)
+
+column(band=detail id=1 x=0 y=0 width=1 height=1 name=customer_id visible=no)
+column(band=detail id=2 x=0 y=0 width=2400 height=200 name=company_name font.face="Segoe UI" font.height=-10)
+
+
+$PBExportHeader$d_ddlb_products.srd
+$PBExportComments$DropDown DataWindow — Products lookup for order entry line items
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=product_id dbname="product_id")
+column=(type=char(30) name=product_code dbname="product_code")
+column=(type=char(150) name=product_name dbname="product_name")
+column=(type=decimal name=unit_price dbname="unit_price")
+retrieve="SELECT product_id, product_code, product_name, unit_price FROM products WHERE is_active = 1 ORDER BY product_name"
+update="products"
+updateable=no
+)
+
+data()
+
+header(height=0)
+detail(height=200)
+summary(height=0)
+footer(height=0)
+
+column(band=detail id=1 x=0 y=0 width=1 height=1 name=product_id visible=no)
+column(band=detail id=2 x=0 y=0 width=600 height=200 name=product_code font.face="Segoe UI" font.height=-10)
+column(band=detail id=3 x=600 y=0 width=2000 height=200 name=product_name font.face="Segoe UI" font.height=-10)
+column(band=detail id=4 x=2600 y=0 width=800 height=200 name=unit_price font.face="Segoe UI" font.height=-10 format="$#,##0.00")

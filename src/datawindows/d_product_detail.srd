@@ -1,0 +1,59 @@
+$PBExportHeader$d_product_detail.srd
+$PBExportComments$Product Detail DataWindow — freeform
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long updatewhere=1 name=product_id dbname="product_id")
+column=(type=long updatewhere=1 name=category_id dbname="category_id")
+column=(type=char(30) updatewhere=1 name=product_code dbname="product_code")
+column=(type=char(150) updatewhere=1 name=product_name dbname="product_name")
+column=(type=char(500) updatewhere=1 name=description dbname="description")
+column=(type=decimal updatewhere=1 name=unit_price dbname="unit_price")
+column=(type=long updatewhere=1 name=stock_qty dbname="stock_qty")
+column=(type=long updatewhere=1 name=reorder_level dbname="reorder_level")
+column=(type=char(20) updatewhere=1 name=unit_of_measure dbname="unit_of_measure")
+column=(type=integer updatewhere=1 name=is_active dbname="is_active")
+retrieve="SELECT p.product_id, p.category_id, p.product_code, p.product_name, p.description, p.unit_price, p.stock_qty, p.reorder_level, p.unit_of_measure, p.is_active FROM products p WHERE p.product_id = :al_product_id"
+arguments=(("al_product_id", long))
+update="products"
+updateable=yes
+tablename="products"
+key=("product_id")
+)
+
+data()
+
+header(height=0)
+detail(height=2800 color=1073741824)
+summary(height=0)
+footer(height=0)
+
+// Labels
+text(band=detail text="Product Code *" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=40 width=900 height=220 color=0)
+text(band=detail text="Product Name *" font.face="Segoe UI" font.height=-10 font.weight=700 x=1600 y=40 width=900 height=220 color=0)
+text(band=detail text="Category" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=360 width=900 height=220 color=0)
+text(band=detail text="Description" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=680 width=900 height=220 color=0)
+text(band=detail text="Unit Price ($) *" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1100 width=900 height=220 color=0)
+text(band=detail text="Stock Qty" font.face="Segoe UI" font.height=-10 font.weight=700 x=1200 y=1100 width=700 height=220 color=0)
+text(band=detail text="Reorder Level" font.face="Segoe UI" font.height=-10 font.weight=700 x=2000 y=1100 width=900 height=220 color=0)
+text(band=detail text="Unit of Measure" font.face="Segoe UI" font.height=-10 font.weight=700 x=3000 y=1100 width=1000 height=220 color=0)
+text(band=detail text="Active" font.face="Segoe UI" font.height=-10 font.weight=700 x=4100 y=1100 width=500 height=220 color=0)
+
+// Columns
+column(band=detail id=1 x=40 y=260 width=1400 height=240 name=product_code font.face="Segoe UI" font.height=-10 border=3 tabsequence=1 background.color=16777215 edit.limit=30)
+column(band=detail id=2 x=1600 y=260 width=2600 height=240 name=product_name font.face="Segoe UI" font.height=-10 border=3 tabsequence=2 background.color=16777215 edit.limit=150)
+column(band=detail id=3 x=40 y=580 width=1600 height=240 name=category_id font.face="Segoe UI" font.height=-10 border=3 tabsequence=3 background.color=16777215
+  edit.style="ddlb"
+  edit.case=0
+  edit.vscrollbar=yes
+  edit.ddlbdw.dataobject="d_ddlb_categories"
+  edit.ddlbdw.displaycolumn="category_name"
+  edit.ddlbdw.datacolumn="category_id")
+column(band=detail id=4 x=40 y=900 width=4200 height=360 name=description font.face="Segoe UI" font.height=-10 border=3 tabsequence=4 background.color=16777215 edit.limit=500 edit.vscrollbar=yes)
+column(band=detail id=5 alignment="2" x=40 y=1320 width=1000 height=240 name=unit_price font.face="Segoe UI" font.height=-10 border=3 tabsequence=5 background.color=16777215 format="$#,##0.00")
+column(band=detail id=6 alignment="2" x=1200 y=1320 width=700 height=240 name=stock_qty font.face="Segoe UI" font.height=-10 border=3 tabsequence=6 background.color=16777215 format="[general]")
+column(band=detail id=7 alignment="2" x=2000 y=1320 width=800 height=240 name=reorder_level font.face="Segoe UI" font.height=-10 border=3 tabsequence=7 background.color=16777215 format="[general]")
+column(band=detail id=8 x=3000 y=1320 width=900 height=240 name=unit_of_measure font.face="Segoe UI" font.height=-10 border=3 tabsequence=8 background.color=16777215 edit.limit=20)
+column(band=detail id=9 alignment="1" x=4100 y=1320 width=300 height=240 name=is_active font.face="Segoe UI" font.height=-10 border=0 tabsequence=9 edit.style="checkbox" edit.on=1 edit.off=0 edit.text1="Yes" edit.textother="No")
+column(band=detail id=10 x=0 y=2700 width=1 height=1 name=product_id visible=no)

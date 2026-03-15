@@ -1,0 +1,64 @@
+$PBExportHeader$d_customer_detail.srd
+$PBExportComments$Customer Detail DataWindow — freeform entry style
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.margin.left=227 print.margin.right=227 print.margin.top=227 print.margin.bottom=227 print.orientation=0 print.color=1 print.prompt=no)
+
+table(column=(type=long updatewhere=1 name=customer_id dbname="customer_id" )
+column=(type=char(100) updatewhere=1 name=company_name dbname="company_name" )
+column=(type=char(100) updatewhere=1 name=contact_name dbname="contact_name" )
+column=(type=char(30) updatewhere=1 name=phone dbname="phone" )
+column=(type=char(100) updatewhere=1 name=email dbname="email" )
+column=(type=char(150) updatewhere=1 name=address_line1 dbname="address_line1" )
+column=(type=char(150) updatewhere=1 name=address_line2 dbname="address_line2" )
+column=(type=char(80) updatewhere=1 name=city dbname="city" )
+column=(type=char(50) updatewhere=1 name=state dbname="state" )
+column=(type=char(20) updatewhere=1 name=zip_code dbname="zip_code" )
+column=(type=char(60) updatewhere=1 name=country dbname="country" )
+column=(type=decimal updatewhere=1 name=credit_limit dbname="credit_limit" )
+column=(type=integer updatewhere=1 name=is_active dbname="is_active" )
+retrieve="SELECT customer_id, company_name, contact_name, phone, email, address_line1, address_line2, city, state, zip_code, country, credit_limit, is_active FROM customers WHERE customer_id = :al_customer_id"
+arguments=(("al_customer_id", long))
+update="customers"
+updateable=yes
+tablename="customers"
+key=("customer_id")
+)
+
+data()
+
+header(height=0 color=1073741824)
+summary(height=0 color=1073741824)
+footer(height=0 color=1073741824)
+detail(height=3200 color=1073741824)
+
+// ── Labels ──
+text(band=detail alignment="0" text="Company Name *" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=40 width=900 height=220 name=lbl_company color=0)
+text(band=detail alignment="0" text="Contact Name" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=340 width=900 height=220 name=lbl_contact color=0)
+text(band=detail alignment="0" text="Phone" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=640 width=900 height=220 name=lbl_phone color=0)
+text(band=detail alignment="0" text="Email" font.face="Segoe UI" font.height=-10 font.weight=700 x=1600 y=640 width=900 height=220 name=lbl_email color=0)
+text(band=detail alignment="0" text="Address Line 1" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=940 width=900 height=220 name=lbl_addr1 color=0)
+text(band=detail alignment="0" text="Address Line 2" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1240 width=900 height=220 name=lbl_addr2 color=0)
+text(band=detail alignment="0" text="City" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1540 width=500 height=220 name=lbl_city color=0)
+text(band=detail alignment="0" text="State" font.face="Segoe UI" font.height=-10 font.weight=700 x=1800 y=1540 width=400 height=220 name=lbl_state color=0)
+text(band=detail alignment="0" text="ZIP" font.face="Segoe UI" font.height=-10 font.weight=700 x=2800 y=1540 width=400 height=220 name=lbl_zip color=0)
+text(band=detail alignment="0" text="Country" font.face="Segoe UI" font.height=-10 font.weight=700 x=3600 y=1540 width=600 height=220 name=lbl_country color=0)
+text(band=detail alignment="0" text="Credit Limit ($)" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1840 width=900 height=220 name=lbl_credit color=0)
+text(band=detail alignment="0" text="Active" font.face="Segoe UI" font.height=-10 font.weight=700 x=1600 y=1840 width=500 height=220 name=lbl_active color=0)
+
+// ── Columns ──
+column(band=detail id=1 alignment="0" tabsequence=1 border=3 x=40 y=260 width=3000 height=240 name=company_name font.face="Segoe UI" font.height=-10 edit.limit=100 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=2 alignment="0" tabsequence=2 border=3 x=40 y=560 width=3000 height=240 name=contact_name font.face="Segoe UI" font.height=-10 edit.limit=100 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=3 alignment="0" tabsequence=3 border=3 x=40 y=860 width=1400 height=240 name=phone font.face="Segoe UI" font.height=-10 edit.limit=30 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=4 alignment="0" tabsequence=4 border=3 x=1600 y=860 width=2000 height=240 name=email font.face="Segoe UI" font.height=-10 edit.limit=100 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=5 alignment="0" tabsequence=5 border=3 x=40 y=1160 width=3400 height=240 name=address_line1 font.face="Segoe UI" font.height=-10 edit.limit=150 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=6 alignment="0" tabsequence=6 border=3 x=40 y=1460 width=3400 height=240 name=address_line2 font.face="Segoe UI" font.height=-10 edit.limit=150 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=7 alignment="0" tabsequence=7 border=3 x=40 y=1760 width=1600 height=240 name=city font.face="Segoe UI" font.height=-10 edit.limit=80 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=8 alignment="0" tabsequence=8 border=3 x=1800 y=1760 width=800 height=240 name=state font.face="Segoe UI" font.height=-10 edit.limit=50 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=9 alignment="0" tabsequence=9 border=3 x=2800 y=1760 width=700 height=240 name=zip_code font.face="Segoe UI" font.height=-10 edit.limit=20 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=10 alignment="0" tabsequence=10 border=3 x=3600 y=1760 width=1000 height=240 name=country font.face="Segoe UI" font.height=-10 edit.limit=60 edit.autohscroll=yes background.color=16777215)
+column(band=detail id=11 alignment="2" tabsequence=11 border=3 x=40 y=2060 width=1200 height=240 name=credit_limit font.face="Segoe UI" font.height=-10 format="$#,##0.00" background.color=16777215)
+column(band=detail id=12 alignment="1" tabsequence=12 border=0 x=1600 y=2060 width=300 height=240 name=is_active font.face="Segoe UI" font.height=-10 edit.style="checkbox" edit.text1="Yes" edit.textother="No" edit.on=1 edit.off=0)
+
+// Hidden primary key
+column(band=detail id=13 alignment="0" tabsequence=0 border=0 x=0 y=3000 width=1 height=1 name=customer_id visible=no)

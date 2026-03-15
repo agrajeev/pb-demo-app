@@ -1,0 +1,6 @@
+$PBExportHeader$pbdemo.pbw
+$PBExportComments$PowerBuilder Demo ERP Workspace
+
+save workspace pbdemo
+target pbdemo
+end target

@@ -1,0 +1,73 @@
+$PBExportHeader$d_dashboard_recent_orders.srd
+$PBExportComments$Dashboard — Recent Orders DataWindow (last 10)
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=order_id dbname="order_id")
+column=(type=date name=order_date dbname="order_date")
+column=(type=char(20) name=status dbname="status")
+column=(type=char(100) name=company_name dbname="company_name")
+column=(type=decimal name=order_total dbname="order_total")
+retrieve="SELECT TOP 10 order_id, order_date, status, company_name, order_total FROM v_order_summary ORDER BY order_date DESC, order_id DESC"
+update="orders"
+updateable=no
+)
+
+data()
+
+header(height=260 color=536870912)
+detail(height=260 color=1073741824)
+summary(height=0)
+footer(height=0)
+
+text(band=header text="Order #" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=3355443 x=0 y=0 width=600 height=260)
+text(band=header text="Date" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=3355443 x=600 y=0 width=700 height=260)
+text(band=header text="Status" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=3355443 x=1300 y=0 width=800 height=260)
+text(band=header text="Customer" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=3355443 x=2100 y=0 width=2000 height=260)
+text(band=header text="Total" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=3355443 x=4100 y=0 width=900 height=260)
+
+column(band=detail id=1 alignment="2" x=0 y=0 width=600 height=260 name=order_id font.face="Segoe UI" font.height=-10 border=1 format="[general]")
+column(band=detail id=2 x=600 y=0 width=700 height=260 name=order_date font.face="Segoe UI" font.height=-10 border=1 format="mm/dd/yy")
+column(band=detail id=3 x=1300 y=0 width=800 height=260 name=status font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=4 x=2100 y=0 width=2000 height=260 name=company_name font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=5 alignment="2" x=4100 y=0 width=900 height=260 name=order_total font.face="Segoe UI" font.height=-10 border=1 format="$#,##0.00")
+
+
+$PBExportHeader$d_dashboard_low_stock.srd
+$PBExportComments$Dashboard — Low Stock Alert DataWindow
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=product_id dbname="product_id")
+column=(type=char(30) name=product_code dbname="product_code")
+column=(type=char(150) name=product_name dbname="product_name")
+column=(type=char(80) name=category_name dbname="category_name")
+column=(type=long name=stock_qty dbname="stock_qty")
+column=(type=long name=reorder_level dbname="reorder_level")
+retrieve="SELECT product_id, product_code, product_name, category_name, stock_qty, reorder_level FROM v_low_stock ORDER BY stock_qty ASC"
+update="products"
+updateable=no
+)
+
+data()
+
+header(height=260 color=536870912)
+detail(height=260 color=1073741824)
+summary(height=0)
+footer(height=0)
+
+text(band=header text="Code" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=12583040 x=0 y=0 width=600 height=260)
+text(band=header text="Product" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=12583040 x=600 y=0 width=2200 height=260)
+text(band=header text="Category" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=12583040 x=2800 y=0 width=900 height=260)
+text(band=header text="Stock" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=12583040 x=3700 y=0 width=500 height=260)
+text(band=header text="Min." font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=12583040 x=4200 y=0 width=500 height=260)
+
+column(band=detail id=1 x=0 y=0 width=600 height=260 name=product_code font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=2 x=600 y=0 width=2200 height=260 name=product_name font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=3 x=2800 y=0 width=900 height=260 name=category_name font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=4 alignment="2" x=3700 y=0 width=500 height=260 name=stock_qty font.face="Segoe UI" font.height=-10 border=1 format="[general]"
+  background.expression="If(stock_qty = 0, RGB(255,180,180), RGB(255,235,180))")
+column(band=detail id=5 alignment="2" x=4200 y=0 width=500 height=260 name=reorder_level font.face="Segoe UI" font.height=-10 border=1 format="[general]")
+column(band=detail id=6 x=0 y=260 width=1 height=1 name=product_id visible=no)

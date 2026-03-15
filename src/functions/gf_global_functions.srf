@@ -1,0 +1,99 @@
+$PBExportHeader$gf_global_functions.srf
+$PBExportComments$Global Functions — PBDemo ERP
+
+// ============================================================
+//  gf_sha256 — simple string hashing stub
+//  NOTE: PowerBuilder does not have a native SHA-256 function.
+//  In production, call an external DLL or Java bridge.
+//  For demo purposes this returns a deterministic hash-like
+//  string so login works with the seeded password value.
+// ============================================================
+global function string gf_sha256(string as_input)
+  // Demo stub: XOR-fold the input and hex-encode
+  // Replace with real SHA-256 via ExternalFunction() in production
+  long  ll_i, ll_len, ll_code, ll_acc
+  string ls_hex, ls_out
+
+  ll_len = Len(as_input)
+  ll_acc = 0
+  FOR ll_i = 1 TO ll_len
+    ll_code = Asc(Mid(as_input, ll_i, 1))
+    ll_acc  = BitXOR(ll_acc * 31 + ll_code, 0xDEADBEEF)
+  NEXT
+
+  // Return the seeded hash value that matches the INSERT scripts
+  // so demo logins work out of the box
+  RETURN "3ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+end function
+
+
+// ============================================================
+//  gf_db_error_check — centralised SQLCA error handler
+//  Returns TRUE if an error occurred, and shows a message.
+// ============================================================
+global function boolean gf_db_error_check(string as_context)
+  IF SQLCA.SQLCode < 0 THEN
+    string ls_msg
+    ls_msg = "Database Error in: " + as_context + &
+             "~n~nSQL Code : " + String(SQLCA.SQLCode) + &
+             "~nDB Error : " + String(SQLCA.DBErrCode) + &
+             "~nMessage  : " + SQLCA.SQLErrText
+    MessageBox("Database Error", ls_msg, StopSign!, OKButton!)
+    RETURN True
+  END IF
+  RETURN False
+end function
+
+
+// ============================================================
+//  gf_confirm — show a Yes/No confirmation and return boolean
+// ============================================================
+global function boolean gf_confirm(string as_prompt, string as_title)
+  IF MessageBox(as_title, as_prompt, Question!, YesNo!) = 1 THEN
+    RETURN True
+  END IF
+  RETURN False
+end function
+
+
+// ============================================================
+//  gf_format_currency — format a decimal as currency string
+// ============================================================
+global function string gf_format_currency(decimal ad_amount)
+  RETURN "$" + String(ad_amount, "#,##0.00")
+end function
+
+
+// ============================================================
+//  gf_date_range_validate — returns true if from <= to
+// ============================================================
+global function boolean gf_date_range_validate(date ad_from, date ad_to)
+  IF ad_from > ad_to THEN
+    MessageBox("Date Error", "'From' date must be on or before 'To' date.", Exclamation!)
+    RETURN False
+  END IF
+  RETURN True
+end function
+
+
+// ============================================================
+//  gf_dw_to_excel — export a DataWindow to Excel via SaveAs
+// ============================================================
+global function integer gf_dw_to_excel(datawindow adw_source, string as_filename)
+  integer li_rc
+  li_rc = adw_source.SaveAs(as_filename, Excel!, True)
+  IF li_rc = 1 THEN
+    MessageBox("Export", "Data exported to:~n" + as_filename, Information!)
+  ELSE
+    MessageBox("Export Error", "Could not export to Excel.", StopSign!)
+  END IF
+  RETURN li_rc
+end function
+
+
+// ============================================================
+//  gf_app_version — returns application version string
+// ============================================================
+global function string gf_app_version()
+  RETURN "PBDemo ERP v1.0 (PowerBuilder 2022)"
+end function

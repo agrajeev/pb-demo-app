@@ -1,0 +1,45 @@
+$PBExportHeader$d_product_list.srd
+$PBExportComments$Product List DataWindow — grid
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long name=product_id dbname="product_id")
+column=(type=char(30) name=product_code dbname="product_code")
+column=(type=char(150) name=product_name dbname="product_name")
+column=(type=char(80) name=category_name dbname="category_name")
+column=(type=decimal name=unit_price dbname="unit_price")
+column=(type=long name=stock_qty dbname="stock_qty")
+column=(type=long name=reorder_level dbname="reorder_level")
+column=(type=char(20) name=unit_of_measure dbname="unit_of_measure")
+column=(type=integer name=is_active dbname="is_active")
+retrieve="SELECT p.product_id, p.product_code, p.product_name, pc.category_name, p.unit_price, p.stock_qty, p.reorder_level, p.unit_of_measure, p.is_active FROM products p LEFT JOIN product_categories pc ON pc.category_id = p.category_id ORDER BY pc.category_name, p.product_name"
+update="products"
+updateable=no
+)
+
+data()
+
+header(height=260 color=536870912)
+detail(height=260 color=1073741824)
+summary(height=0)
+footer(height=0)
+
+text(band=header text="Code" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=0 y=0 width=600 height=260)
+text(band=header text="Product Name" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=600 y=0 width=2000 height=260)
+text(band=header text="Category" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=2600 y=0 width=900 height=260)
+text(band=header text="Price" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=3500 y=0 width=800 height=260)
+text(band=header text="Stock" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=4300 y=0 width=600 height=260)
+text(band=header text="Reorder" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=4900 y=0 width=600 height=260)
+text(band=header text="UOM" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=5500 y=0 width=400 height=260)
+
+column(band=detail id=1 x=0 y=0 width=600 height=260 name=product_code font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=2 x=600 y=0 width=2000 height=260 name=product_name font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=3 x=2600 y=0 width=900 height=260 name=category_name font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=4 alignment="2" x=3500 y=0 width=800 height=260 name=unit_price font.face="Segoe UI" font.height=-10 border=1 format="$#,##0.00")
+column(band=detail id=5 alignment="2" x=4300 y=0 width=600 height=260 name=stock_qty font.face="Segoe UI" font.height=-10 border=1 format="[general]"
+  background.expression="If(stock_qty <= reorder_level, RGB(255,220,200), RGB(220,255,220))")
+column(band=detail id=6 alignment="2" x=4900 y=0 width=600 height=260 name=reorder_level font.face="Segoe UI" font.height=-10 border=1 format="[general]")
+column(band=detail id=7 x=5500 y=0 width=400 height=260 name=unit_of_measure font.face="Segoe UI" font.height=-10 border=1)
+column(band=detail id=8 x=0 y=260 width=1 height=1 name=product_id visible=no)
+column(band=detail id=9 x=2 y=260 width=1 height=1 name=is_active visible=no)

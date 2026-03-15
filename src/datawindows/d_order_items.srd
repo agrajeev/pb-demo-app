@@ -1,0 +1,54 @@
+$PBExportHeader$d_order_items.srd
+$PBExportComments$Order Line Items DataWindow — editable grid
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long updatewhere=1 name=item_id dbname="item_id")
+column=(type=long updatewhere=1 name=order_id dbname="order_id")
+column=(type=long updatewhere=1 name=product_id dbname="product_id")
+column=(type=char(30) name=product_code dbname="product_code")
+column=(type=char(150) name=product_name dbname="product_name")
+column=(type=long updatewhere=1 name=quantity dbname="quantity")
+column=(type=decimal updatewhere=1 name=unit_price dbname="unit_price")
+column=(type=decimal updatewhere=1 name=discount_pct dbname="discount_pct")
+column=(type=decimal name=line_total dbname="line_total")
+retrieve="SELECT oi.item_id, oi.order_id, oi.product_id, p.product_code, p.product_name, oi.quantity, oi.unit_price, oi.discount_pct, oi.line_total FROM order_items oi JOIN products p ON p.product_id = oi.product_id WHERE oi.order_id = :al_order_id ORDER BY oi.item_id"
+arguments=(("al_order_id", long))
+update="order_items"
+updateable=yes
+tablename="order_items"
+key=("item_id")
+)
+
+data()
+
+header(height=260 color=536870912)
+detail(height=260 color=1073741824)
+summary(height=300 color=1073741824)
+footer(height=0 color=1073741824)
+
+// Column headers
+text(band=header text="Code" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=0 y=0 width=600 height=260)
+text(band=header text="Product Name" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=600 y=0 width=2200 height=260)
+text(band=header text="Qty" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=2800 y=0 width=500 height=260)
+text(band=header text="Unit Price" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=3300 y=0 width=900 height=260)
+text(band=header text="Disc %" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=4200 y=0 width=600 height=260)
+text(band=header text="Line Total" font.face="Segoe UI" font.height=-10 font.weight=700 color=16777215 background.color=4210752 x=4800 y=0 width=1000 height=260)
+
+// Detail columns
+column(band=detail id=1 x=0 y=0 width=600 height=260 name=product_code font.face="Segoe UI" font.height=-10 border=1 tabsequence=1)
+column(band=detail id=2 x=600 y=0 width=2200 height=260 name=product_name font.face="Segoe UI" font.height=-10 border=1 tabsequence=0)
+column(band=detail id=3 alignment="2" x=2800 y=0 width=500 height=260 name=quantity font.face="Segoe UI" font.height=-10 border=3 tabsequence=2 background.color=16777215 format="[general]")
+column(band=detail id=4 alignment="2" x=3300 y=0 width=900 height=260 name=unit_price font.face="Segoe UI" font.height=-10 border=3 tabsequence=3 background.color=16777215 format="$#,##0.00")
+column(band=detail id=5 alignment="2" x=4200 y=0 width=600 height=260 name=discount_pct font.face="Segoe UI" font.height=-10 border=3 tabsequence=4 background.color=16777215 format="0.00")
+column(band=detail id=6 alignment="2" x=4800 y=0 width=1000 height=260 name=line_total font.face="Segoe UI" font.height=-10 border=1 tabsequence=0 format="$#,##0.00")
+
+// Hidden keys
+column(band=detail id=7 x=0 y=260 width=1 height=1 name=item_id visible=no)
+column(band=detail id=8 x=2 y=260 width=1 height=1 name=order_id visible=no)
+column(band=detail id=9 x=4 y=260 width=1 height=1 name=product_id visible=no)
+
+// Summary — order total
+text(band=summary text="ORDER TOTAL:" font.face="Segoe UI" font.height=-10 font.weight=700 x=3000 y=30 width=1200 height=240 alignment="2" color=0)
+compute(band=summary alignment="2" expression="sum(line_total)" format="$#,##0.00" font.face="Segoe UI" font.height=-10 font.weight=700 x=4800 y=30 width=1000 height=240 color=0 name=c_total)

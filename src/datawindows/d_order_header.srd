@@ -1,0 +1,58 @@
+$PBExportHeader$d_order_header.srd
+$PBExportComments$Order Header DataWindow — single row freeform
+
+release 19;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0)
+
+table(column=(type=long updatewhere=1 name=order_id dbname="order_id")
+column=(type=long updatewhere=1 name=customer_id dbname="customer_id")
+column=(type=char(100) name=company_name dbname="company_name")
+column=(type=date updatewhere=1 name=order_date dbname="order_date")
+column=(type=date updatewhere=1 name=required_date dbname="required_date")
+column=(type=date updatewhere=1 name=shipped_date dbname="shipped_date")
+column=(type=char(20) updatewhere=1 name=status dbname="status")
+column=(type=char(100) updatewhere=1 name=ship_to_name dbname="ship_to_name")
+column=(type=char(200) updatewhere=1 name=ship_address dbname="ship_address")
+column=(type=char(80) updatewhere=1 name=ship_city dbname="ship_city")
+column=(type=char(50) updatewhere=1 name=ship_state dbname="ship_state")
+column=(type=char(20) updatewhere=1 name=ship_zip dbname="ship_zip")
+column=(type=char(500) updatewhere=1 name=notes dbname="notes")
+retrieve="SELECT o.order_id, o.customer_id, c.company_name, o.order_date, o.required_date, o.shipped_date, o.status, o.ship_to_name, o.ship_address, o.ship_city, o.ship_state, o.ship_zip, o.notes FROM orders o JOIN customers c ON c.customer_id = o.customer_id WHERE o.order_id = :al_order_id"
+arguments=(("al_order_id", long))
+update="orders"
+updateable=yes
+tablename="orders"
+key=("order_id")
+)
+
+data()
+
+header(height=0)
+detail(height=2400 color=1073741824)
+summary(height=0)
+footer(height=0)
+
+// Labels
+text(band=detail text="Order #" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=40 width=600 height=220 color=0)
+text(band=detail text="Customer" font.face="Segoe UI" font.height=-10 font.weight=700 x=1000 y=40 width=600 height=220 color=0)
+text(band=detail text="Order Date" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=360 width=700 height=220 color=0)
+text(band=detail text="Required Date" font.face="Segoe UI" font.height=-10 font.weight=700 x=1000 y=360 width=800 height=220 color=0)
+text(band=detail text="Status" font.face="Segoe UI" font.height=-10 font.weight=700 x=2400 y=360 width=600 height=220 color=0)
+text(band=detail text="Ship To" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=680 width=600 height=220 color=0)
+text(band=detail text="Ship Address" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1000 width=800 height=220 color=0)
+text(band=detail text="Notes" font.face="Segoe UI" font.height=-10 font.weight=700 x=40 y=1400 width=600 height=220 color=0)
+
+// Columns
+column(band=detail id=1 x=40 y=260 width=800 height=240 name=order_id font.face="Segoe UI" font.height=-10 border=0 format="[general]" color=4210880)
+column(band=detail id=2 x=1000 y=260 width=2800 height=240 name=company_name font.face="Segoe UI" font.height=-10 border=0 color=4210880)
+column(band=detail id=3 x=40 y=580 width=800 height=240 name=order_date font.face="Segoe UI" font.height=-10 border=3 format="mm/dd/yyyy" background.color=16777215)
+column(band=detail id=4 x=1000 y=580 width=900 height=240 name=required_date font.face="Segoe UI" font.height=-10 border=3 format="mm/dd/yyyy" background.color=16777215)
+column(band=detail id=5 x=2400 y=580 width=900 height=240 name=status font.face="Segoe UI" font.height=-10 border=0 color=4210880)
+column(band=detail id=6 x=40 y=900 width=2000 height=240 name=ship_to_name font.face="Segoe UI" font.height=-10 border=3 background.color=16777215)
+column(band=detail id=7 x=40 y=1220 width=3200 height=240 name=ship_address font.face="Segoe UI" font.height=-10 border=3 background.color=16777215)
+column(band=detail id=8 x=40 y=1620 width=3400 height=360 name=notes font.face="Segoe UI" font.height=-10 border=3 background.color=16777215)
+column(band=detail id=9 x=0 y=2300 width=1 height=1 name=customer_id visible=no)
+column(band=detail id=10 x=2 y=2300 width=1 height=1 name=ship_city visible=no)
+column(band=detail id=11 x=4 y=2300 width=1 height=1 name=ship_state visible=no)
+column(band=detail id=12 x=6 y=2300 width=1 height=1 name=ship_zip visible=no)
+column(band=detail id=13 x=8 y=2300 width=1 height=1 name=shipped_date visible=no)
